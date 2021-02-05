@@ -29,7 +29,7 @@ public class FTagViewManager
     }
 
     private final Map<ITagView, ViewTree> mMapTagViewTree = new HashMap<>();
-    private final Map<View, ViewTree> mMapViewTreeCache = new ConcurrentHashMap<>();
+    private final Map<View, ViewTree> mMapViewTreeCache = new HashMap<>();
 
     private boolean mIsDebug;
 
@@ -207,12 +207,10 @@ public class FTagViewManager
             {
                 if (isAttached(view))
                 {
+                    mMapViewTreeCache.put(view, this);
                     final String put = nMapView.put(view, "");
                     if (put == null)
-                    {
-                        mMapViewTreeCache.put(view, this);
                         view.addOnAttachStateChangeListener(this);
-                    }
                 }
             }
         }
@@ -228,8 +226,8 @@ public class FTagViewManager
             v.removeOnAttachStateChangeListener(this);
             synchronized (FTagViewManager.this)
             {
-                nMapView.remove(v);
                 mMapViewTreeCache.remove(v);
+                nMapView.remove(v);
             }
         }
     }
