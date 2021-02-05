@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class FTagViewManager
         }
     }
 
-    private final Map<ITagView, ViewTree> mMapTagViewTree = new ConcurrentHashMap<>();
+    private final Map<ITagView, ViewTree> mMapTagViewTree = new HashMap<>();
     private final Map<View, ViewTree> mMapViewTreeCache = new ConcurrentHashMap<>();
 
     private boolean mIsDebug;
