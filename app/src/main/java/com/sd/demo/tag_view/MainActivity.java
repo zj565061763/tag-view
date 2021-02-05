@@ -4,16 +4,20 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.sd.demo.tag_view.databinding.ActivityMainBinding;
 import com.sd.lib.tag_view.FTagViewManager;
 
 public class MainActivity extends AppCompatActivity
 {
+    private ActivityMainBinding mBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         FTagViewManager.getDefault().setDebug(true);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
     }
 }
