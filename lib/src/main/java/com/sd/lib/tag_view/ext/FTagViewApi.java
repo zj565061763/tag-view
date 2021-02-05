@@ -4,9 +4,8 @@ import android.view.View;
 
 import com.sd.lib.tag_view.FTagViewManager;
 import com.sd.lib.tag_view.ITagView;
-import com.sd.lib.tag_view.ITagView.ItemManager;
 
-public class FTagViewApi
+public class FTagViewApi implements ITagView.ItemManager
 {
     private final View mView;
 
@@ -17,11 +16,6 @@ public class FTagViewApi
         mView = view;
     }
 
-    /**
-     * {@link FTagViewManager#findTagView(View)}
-     *
-     * @return
-     */
     private ITagView findTagView()
     {
         return FTagViewManager.getDefault().findTagView(mView);
@@ -41,46 +35,33 @@ public class FTagViewApi
         return tagView.getViewTag();
     }
 
-    /**
-     * {@link ItemManager#findItem(Class)}
-     *
-     * @return
-     */
+    @Override
     public <T extends ITagView.Item> T findItem(Class<T> clazz)
     {
         final ITagView tagView = findTagView();
         if (tagView == null)
             return null;
 
-        final ITagView.ItemManager itemManager = tagView.getItemManager();
-        return itemManager.findItem(clazz);
+        return tagView.getItemManager().findItem(clazz);
     }
 
-    /**
-     * {@link ItemManager#getItem(Class)}
-     *
-     * @return
-     */
+    @Override
     public <T extends ITagView.Item> T getItem(Class<T> clazz)
     {
         final ITagView tagView = findTagView();
         if (tagView == null)
             return null;
 
-        final ITagView.ItemManager itemManager = tagView.getItemManager();
-        return itemManager.getItem(clazz);
+        return tagView.getItemManager().getItem(clazz);
     }
 
-    /**
-     * {@link ItemManager#clearItem()}
-     */
+    @Override
     public void clearItem()
     {
         final ITagView tagView = findTagView();
         if (tagView == null)
             return;
 
-        final ITagView.ItemManager itemManager = tagView.getItemManager();
-        itemManager.clearItem();
+        tagView.getItemManager().clearItem();
     }
 }
