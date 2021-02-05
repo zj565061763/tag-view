@@ -1,6 +1,5 @@
 package com.sd.lib.tag_view;
 
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
@@ -54,13 +53,13 @@ public class FTagViewManager
      */
     public ITagView findTagView(View view)
     {
-        if (!isAttached(view))
+        if (!Utils.isAttached(view))
             return null;
 
         if (mIsDebug)
         {
             Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
-                    + " view:" + getObjectId(view)
+                    + " view:" + Utils.getObjectId(view)
                     + " ---------->");
         }
 
@@ -70,8 +69,8 @@ public class FTagViewManager
             if (mIsDebug)
             {
                 Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
-                        + " view:" + getObjectId(view)
-                        + " tagView:" + getObjectId(tagView));
+                        + " view:" + Utils.getObjectId(view)
+                        + " tagView:" + Utils.getObjectId(tagView));
             }
             return tagView;
         }
@@ -83,7 +82,7 @@ public class FTagViewManager
         while (viewParent instanceof View)
         {
             final View parent = (View) viewParent;
-            if (!isAttached(parent))
+            if (!Utils.isAttached(parent))
                 return null;
 
             tagView = checkTagView(parent);
@@ -93,8 +92,8 @@ public class FTagViewManager
                 if (mIsDebug)
                 {
                     Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
-                            + " view:" + getObjectId(view)
-                            + " tagView:" + getObjectId(tagView)
+                            + " view:" + Utils.getObjectId(view)
+                            + " tagView:" + Utils.getObjectId(tagView)
                             + " level:" + listChild.size()
                             + " cacheSize:" + mMapViewCache.size()
                     );
@@ -134,7 +133,7 @@ public class FTagViewManager
         {
             for (View view : list)
             {
-                if (!isAttached(view))
+                if (!Utils.isAttached(view))
                     continue;
 
                 final ITagView put = mMapViewCache.put(view, tagView);
@@ -161,20 +160,4 @@ public class FTagViewManager
             }
         }
     };
-
-    private static boolean isAttached(View view)
-    {
-        if (view == null)
-            return false;
-
-        if (Build.VERSION.SDK_INT >= 19)
-            return view.isAttachedToWindow();
-        else
-            return view.getWindowToken() != null;
-    }
-
-    private static String getObjectId(Object object)
-    {
-        return FTagView.createTag(object);
-    }
 }

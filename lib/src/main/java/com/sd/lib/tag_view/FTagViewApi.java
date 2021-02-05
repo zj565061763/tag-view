@@ -1,4 +1,4 @@
-package com.sd.lib.tag_view.ext;
+package com.sd.lib.tag_view;
 
 import android.view.View;
 
@@ -19,6 +19,11 @@ public class FTagViewApi implements ITagView.ItemManager
     private ITagView findTagView()
     {
         return FTagViewManager.getDefault().findTagView(mView);
+    }
+
+    public void prepare(Runnable runnable)
+    {
+
     }
 
     /**

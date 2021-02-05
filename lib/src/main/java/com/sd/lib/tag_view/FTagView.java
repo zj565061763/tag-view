@@ -16,7 +16,7 @@ public class FTagView extends FrameLayout implements ITagView
     public FTagView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        mViewTag = createTag(this);
+        mViewTag = Utils.getObjectId(this);
         mItemManager = new InternalItemManager();
     }
 
@@ -97,18 +97,5 @@ public class FTagView extends FrameLayout implements ITagView
 
         if (Modifier.isAbstract(clazz.getModifiers()))
             throw new IllegalArgumentException("clazz is abstract " + clazz);
-    }
-
-    /**
-     * 创建tag
-     *
-     * @param object
-     * @return
-     */
-    public static String createTag(Object object)
-    {
-        final String className = object.getClass().getName();
-        final String hashCode = Integer.toHexString(System.identityHashCode(object));
-        return className + "@" + hashCode;
     }
 }
