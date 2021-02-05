@@ -29,7 +29,7 @@ public class FTagViewManager
     }
 
     private final Map<ITagView, ViewTree> mMapTagViewTree = new HashMap<>();
-    private final Map<View, ViewTree> mMapViewTreeCache = new HashMap<>();
+    private final Map<View, ViewTree> mMapViewCache = new HashMap<>();
 
     private boolean mIsDebug;
 
@@ -103,7 +103,7 @@ public class FTagViewManager
                             + " viewTree:" + viewTree
                             + " level:" + listChild.size()
                             + " viewTreeSize:" + mMapTagViewTree.size()
-                            + " cacheTreeSize:" + mMapViewTreeCache.size()
+                            + " cacheTreeSize:" + mMapViewCache.size()
                     );
                 }
                 return viewTree.nTagView;
@@ -125,7 +125,7 @@ public class FTagViewManager
             return getOrCreateViewTree(tagView);
         }
 
-        return mMapViewTreeCache.get(view);
+        return mMapViewCache.get(view);
     }
 
     private synchronized ViewTree getOrCreateViewTree(ITagView tagView)
@@ -146,7 +146,7 @@ public class FTagViewManager
                         + " tagView:" + getObjectId(tagView)
                         + " viewTree:" + viewTree
                         + " viewTreeSize:" + mMapTagViewTree.size()
-                        + " cacheTreeSize:" + mMapViewTreeCache.size());
+                        + " cacheTreeSize:" + mMapViewCache.size());
             }
         }
         return viewTree;
@@ -165,7 +165,7 @@ public class FTagViewManager
                     + " tagView:" + getObjectId(tagView)
                     + " viewTree:" + viewTree
                     + " viewTreeSize:" + mMapTagViewTree.size()
-                    + " cacheTreeSize:" + mMapViewTreeCache.size());
+                    + " cacheTreeSize:" + mMapViewCache.size());
         }
     }
 
@@ -207,7 +207,7 @@ public class FTagViewManager
             {
                 if (isAttached(view))
                 {
-                    mMapViewTreeCache.put(view, this);
+                    mMapViewCache.put(view, this);
                     final String put = nMapView.put(view, "");
                     if (put == null)
                         view.addOnAttachStateChangeListener(this);
@@ -226,7 +226,7 @@ public class FTagViewManager
             v.removeOnAttachStateChangeListener(this);
             synchronized (FTagViewManager.this)
             {
-                mMapViewTreeCache.remove(v);
+                mMapViewCache.remove(v);
                 nMapView.remove(v);
             }
         }
