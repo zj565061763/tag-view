@@ -29,4 +29,10 @@ public class TestView extends FrameLayout
             }
         });
     }
+
+    @Override
+    protected void onAttachedToWindow()
+    {
+        super.onAttachedToWindow();
+    }
 }
