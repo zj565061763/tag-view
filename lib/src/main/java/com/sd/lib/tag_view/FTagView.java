@@ -37,14 +37,10 @@ public class FTagView extends FrameLayout implements ITagView
         try
         {
             return clazz.newInstance();
-        } catch (IllegalAccessException e)
+        } catch (Exception e)
         {
-            e.printStackTrace();
-        } catch (InstantiationException e)
-        {
-            e.printStackTrace();
+            throw new RuntimeException("Create instance failed for class:" + clazz.getName(), e);
         }
-        return null;
     }
 
     private final class InternalItemManager implements ItemManager
@@ -72,7 +68,7 @@ public class FTagView extends FrameLayout implements ITagView
             {
                 item = createItem(clazz);
                 if (item == null)
-                    throw new NullPointerException("createItem return null");
+                    throw new NullPointerException("createItem method return null");
 
                 nItemHolder.put(clazz, item);
                 item.init(FTagView.this);
@@ -94,7 +90,7 @@ public class FTagView extends FrameLayout implements ITagView
     private static <T extends Item> void checkItemClass(Class<T> clazz)
     {
         if (clazz == null)
-            throw new NullPointerException("clazz is null");
+            throw new IllegalArgumentException("clazz is null");
 
         if (clazz.isInterface())
             throw new IllegalArgumentException("clazz is interface " + clazz);
