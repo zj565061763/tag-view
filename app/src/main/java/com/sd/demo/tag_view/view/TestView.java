@@ -9,23 +9,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.sd.demo.tag_view.item.TestItem;
-import com.sd.lib.tag_view.ext.FTagViewApi;
+import com.sd.lib.tag_view.FTagViewApi;
 
 public class TestView extends FrameLayout
 {
+    private final FTagViewApi mTagViewApi = new FTagViewApi(TestView.this);
+
     public TestView(@NonNull Context context, @Nullable AttributeSet attrs)
     {
         super(context, attrs);
-    }
-
-    @Override
-    protected void onAttachedToWindow()
-    {
-        super.onAttachedToWindow();
-
-        final FTagViewApi tagViewApi = new FTagViewApi(this);
-        Log.i(TestView.class.getSimpleName(), "onAttachedToWindow"
-                + " getViewTag:" + tagViewApi.getViewTag()
-                + " getItem:" + tagViewApi.getItem(TestItem.class));
+        mTagViewApi.prepare(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Log.i(TestView.class.getSimpleName(), "onAttachedToWindow"
+                        + " getViewTag:" + mTagViewApi.getViewTag()
+                        + " getItem:" + mTagViewApi.getItem(TestItem.class));
+            }
+        });
     }
 }

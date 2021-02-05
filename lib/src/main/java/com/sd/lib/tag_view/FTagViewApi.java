@@ -2,9 +2,6 @@ package com.sd.lib.tag_view;
 
 import android.view.View;
 
-import com.sd.lib.tag_view.FTagViewManager;
-import com.sd.lib.tag_view.ITagView;
-
 public class FTagViewApi implements ITagView.ItemManager
 {
     private final View mView;
@@ -21,9 +18,23 @@ public class FTagViewApi implements ITagView.ItemManager
         return FTagViewManager.getDefault().findTagView(mView);
     }
 
+    /**
+     * 准备调用当前对象的api
+     *
+     * @param runnable
+     */
     public void prepare(Runnable runnable)
     {
+        if (runnable == null)
+            return;
 
+        if (Utils.isAttached(mView))
+        {
+            runnable.run();
+        } else
+        {
+            mView.post(runnable);
+        }
     }
 
     /**
