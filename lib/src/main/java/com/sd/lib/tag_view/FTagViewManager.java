@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class FTagViewManager
 {
@@ -28,8 +27,7 @@ public class FTagViewManager
         }
     }
 
-    private final Map<ITagView, ViewTree> mMapTagViewTree = new HashMap<>();
-    private final Map<View, ViewTree> mMapViewCache = new HashMap<>();
+    private final Map<View, ITagView> mMapViewCache = new HashMap<>();
 
     private boolean mIsDebug;
 
@@ -66,18 +64,16 @@ public class FTagViewManager
                     + " ---------->");
         }
 
-        final ViewTree tree = findViewTree(view);
-        if (tree != null)
+        ITagView tagView = checkTagView(view);
+        if (tagView != null)
         {
             if (mIsDebug)
             {
                 Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
                         + " view:" + getObjectId(view)
-                        + " tagView:" + getObjectId(tree.nTagView)
-                        + " viewTree:" + tree);
+                        + " tagView:" + getObjectId(tagView));
             }
-
-            return tree.nTagView;
+            return tagView;
         }
 
         final List<View> listChild = new LinkedList<>();
@@ -90,23 +86,21 @@ public class FTagViewManager
             if (!isAttached(parent))
                 return null;
 
-            final ViewTree viewTree = findViewTree(parent);
-            if (viewTree != null)
+            tagView = checkTagView(parent);
+            if (tagView != null)
             {
-                viewTree.addViews(listChild);
+                cacheView(tagView, listChild);
 
                 if (mIsDebug)
                 {
                     Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
                             + " view:" + getObjectId(view)
-                            + " tagView:" + getObjectId(viewTree.nTagView)
-                            + " viewTree:" + viewTree
+                            + " tagView:" + getObjectId(tagView)
                             + " level:" + listChild.size()
-                            + " viewTreeSize:" + mMapTagViewTree.size()
-                            + " cacheTreeSize:" + mMapViewCache.size()
+                            + " cacheSize:" + mMapViewCache.size()
                     );
                 }
-                return viewTree.nTagView;
+                return tagView;
             } else
             {
                 listChild.add(parent);
@@ -117,104 +111,39 @@ public class FTagViewManager
         throw new RuntimeException(ITagView.class.getSimpleName() + " was not found int view tree " + view);
     }
 
-    private ViewTree findViewTree(View view)
+    private ITagView checkTagView(View view)
     {
         if (view instanceof ITagView)
         {
             final ITagView tagView = (ITagView) view;
-            return getOrCreateViewTree(tagView);
-        }
-
-        return mMapViewCache.get(view);
-    }
-
-    private synchronized ViewTree getOrCreateViewTree(ITagView tagView)
-    {
-        if (tagView == null)
-            throw new IllegalArgumentException("tagView is null");
-
-        ViewTree viewTree = mMapTagViewTree.get(tagView);
-        if (viewTree == null)
+            return tagView;
+        } else
         {
-            viewTree = new ViewTree(tagView);
-            mMapTagViewTree.put(tagView, viewTree);
-            initTagView(tagView);
-
-            if (mIsDebug)
-            {
-                Log.i(FTagViewManager.class.getSimpleName(), "create ViewTree"
-                        + " tagView:" + getObjectId(tagView)
-                        + " viewTree:" + viewTree
-                        + " viewTreeSize:" + mMapTagViewTree.size()
-                        + " cacheTreeSize:" + mMapViewCache.size());
-            }
-        }
-        return viewTree;
-    }
-
-    private synchronized void removeViewTree(ITagView tagView)
-    {
-        if (tagView == null)
-            throw new IllegalArgumentException("tagView is null");
-
-        final ViewTree viewTree = mMapTagViewTree.remove(tagView);
-
-        if (mIsDebug)
-        {
-            Log.i(FTagViewManager.class.getSimpleName(), "remove ViewTree"
-                    + " tagView:" + getObjectId(tagView)
-                    + " viewTree:" + viewTree
-                    + " viewTreeSize:" + mMapTagViewTree.size()
-                    + " cacheTreeSize:" + mMapViewCache.size());
+            return mMapViewCache.get(view);
         }
     }
 
-    private void initTagView(final ITagView tagView)
+    /**
+     * 缓存View
+     *
+     * @param tagView
+     * @param list
+     */
+    private void cacheView(ITagView tagView, List<View> list)
     {
-        final View view = (View) tagView;
-        view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener()
+        for (View view : list)
         {
-            @Override
-            public void onViewAttachedToWindow(View v)
-            {
-            }
+            if (!isAttached(view))
+                continue;
 
-            @Override
-            public void onViewDetachedFromWindow(View v)
-            {
-                v.removeOnAttachStateChangeListener(this);
-                removeViewTree(tagView);
-            }
-        });
+            final ITagView put = mMapViewCache.put(view, tagView);
+            if (put == null)
+                view.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
+        }
     }
 
-    private final class ViewTree implements View.OnAttachStateChangeListener
+    private final View.OnAttachStateChangeListener mOnAttachStateChangeListener = new View.OnAttachStateChangeListener()
     {
-        private final ITagView nTagView;
-        private final Map<View, String> nMapView = new ConcurrentHashMap<>();
-
-        public ViewTree(ITagView tagView)
-        {
-            if (tagView == null)
-                throw new IllegalArgumentException("tagView is null");
-
-            this.nTagView = tagView;
-        }
-
-        public void addViews(List<View> views)
-        {
-            for (View view : views)
-            {
-                if (isAttached(view))
-                {
-                    mMapViewCache.put(view, this);
-                    final String put = nMapView.put(view, "");
-                    if (put == null)
-                        view.addOnAttachStateChangeListener(this);
-                }
-            }
-        }
-
         @Override
         public void onViewAttachedToWindow(View v)
         {
@@ -227,10 +156,9 @@ public class FTagViewManager
             synchronized (FTagViewManager.this)
             {
                 mMapViewCache.remove(v);
-                nMapView.remove(v);
             }
         }
-    }
+    };
 
     private static boolean isAttached(View view)
     {
