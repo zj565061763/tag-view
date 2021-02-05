@@ -83,7 +83,7 @@ public class FTagViewManager
         listChild.add(view);
 
         ViewParent viewParent = view.getParent();
-        while (viewParent != null && viewParent instanceof View)
+        while (viewParent instanceof View)
         {
             final View parent = (View) viewParent;
             if (!isAttached(parent))
