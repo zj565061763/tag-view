@@ -72,7 +72,7 @@ public class FTagViewManager
             {
                 Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
                         + " view:" + getObjectId(view)
-                        + " tagView:" + tree.nTagView
+                        + " tagView:" + getObjectId(tree.nTagView)
                         + " viewTree:" + tree);
             }
 
@@ -98,7 +98,7 @@ public class FTagViewManager
                 {
                     Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
                             + " view:" + getObjectId(view)
-                            + " tagView:" + viewTree.nTagView
+                            + " tagView:" + getObjectId(viewTree.nTagView)
                             + " viewTree:" + viewTree
                             + " level:" + listChild.size()
                             + " viewTreeSize:" + mMapTagViewTree.size()
