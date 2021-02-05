@@ -5,10 +5,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FTagViewManager
 {
@@ -27,7 +27,7 @@ public class FTagViewManager
         }
     }
 
-    private final Map<View, ITagView> mMapViewCache = new HashMap<>();
+    private final Map<View, ITagView> mMapViewCache = new ConcurrentHashMap<>();
 
     private boolean mIsDebug;
 
@@ -52,7 +52,7 @@ public class FTagViewManager
      * @param view
      * @return
      */
-    public synchronized ITagView findTagView(View view)
+    public ITagView findTagView(View view)
     {
         if (!isAttached(view))
             return null;
@@ -90,7 +90,6 @@ public class FTagViewManager
             if (tagView != null)
             {
                 cacheView(tagView, listChild);
-
                 if (mIsDebug)
                 {
                     Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
@@ -131,14 +130,17 @@ public class FTagViewManager
      */
     private void cacheView(ITagView tagView, List<View> list)
     {
-        for (View view : list)
+        synchronized (FTagViewManager.this)
         {
-            if (!isAttached(view))
-                continue;
+            for (View view : list)
+            {
+                if (!isAttached(view))
+                    continue;
 
-            final ITagView put = mMapViewCache.put(view, tagView);
-            if (put == null)
-                view.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
+                final ITagView put = mMapViewCache.put(view, tagView);
+                if (put == null)
+                    view.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
+            }
         }
     }
 
