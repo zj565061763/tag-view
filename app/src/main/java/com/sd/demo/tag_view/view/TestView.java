@@ -23,7 +23,7 @@ public class TestView extends FrameLayout
             @Override
             public void run()
             {
-                Log.i(TestView.class.getSimpleName(), "onAttachedToWindow"
+                Log.i(TestView.class.getSimpleName(), "FTagViewApi"
                         + " getViewTag:" + mTagViewApi.getViewTag()
                         + " getItem:" + mTagViewApi.getItem(TestItem.class));
             }
