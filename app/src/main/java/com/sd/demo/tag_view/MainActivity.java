@@ -20,4 +20,11 @@ public class MainActivity extends AppCompatActivity
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
     }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        mBinding.viewTag.getItemManager().clearItem();
+    }
 }
