@@ -8,7 +8,6 @@ import android.view.ViewParent;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FTagViewManager
@@ -27,9 +26,6 @@ public class FTagViewManager
             return sDefault;
         }
     }
-
-    /** 空的Tag */
-    public static final String TAG_EMPTY = UUID.randomUUID().toString();
 
     private final Map<ITagView, ViewTree> mMapTagViewTree = new ConcurrentHashMap<>();
     private final Map<View, ViewTree> mMapViewTreeCache = new ConcurrentHashMap<>();
@@ -52,19 +48,19 @@ public class FTagViewManager
     }
 
     /**
-     * 查找View对应的tag
+     * 查找{@link ITagView}
      *
      * @param view
      * @return
      */
-    public synchronized String findViewTag(View view)
+    public synchronized ITagView findTagView(View view)
     {
         if (!isAttached(view))
-            return TAG_EMPTY;
+            return null;
 
         if (mIsDebug)
         {
-            Log.i(FTagViewManager.class.getSimpleName(), "findViewTag"
+            Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
                     + " view:" + getObjectId(view)
                     + " ---------->");
         }
@@ -74,12 +70,13 @@ public class FTagViewManager
         {
             if (mIsDebug)
             {
-                Log.i(FTagViewManager.class.getSimpleName(), "findViewTag"
+                Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
                         + " view:" + getObjectId(view)
+                        + " tagView:" + tree.nTagView
                         + " viewTree:" + tree);
             }
 
-            return tree.getViewTag();
+            return tree.nTagView;
         }
 
         final List<View> listChild = new LinkedList<>();
@@ -90,7 +87,7 @@ public class FTagViewManager
         {
             final View parent = (View) viewParent;
             if (!isAttached(parent))
-                return TAG_EMPTY;
+                return null;
 
             final ViewTree viewTree = findViewTree(parent);
             if (viewTree != null)
@@ -99,15 +96,16 @@ public class FTagViewManager
 
                 if (mIsDebug)
                 {
-                    Log.i(FTagViewManager.class.getSimpleName(), "findViewTag"
+                    Log.i(FTagViewManager.class.getSimpleName(), "findTagView"
                             + " view:" + getObjectId(view)
+                            + " tagView:" + tree.nTagView
                             + " viewTree:" + viewTree
                             + " level:" + listChild.size()
                             + " viewTreeSize:" + mMapTagViewTree.size()
                             + " cacheTreeSize:" + mMapViewTreeCache.size()
                     );
                 }
-                return viewTree.getViewTag();
+                return viewTree.nTagView;
             } else
             {
                 listChild.add(parent);
@@ -202,12 +200,6 @@ public class FTagViewManager
             this.nTagView = tagView;
         }
 
-        public String getViewTag()
-        {
-            final View view = (View) nTagView;
-            return isAttached(view) ? nTagView.getViewTag() : TAG_EMPTY;
-        }
-
         public void addViews(List<View> views)
         {
             for (View view : views)
@@ -259,8 +251,6 @@ public class FTagViewManager
 
     private static String getObjectId(Object object)
     {
-        final String className = object.getClass().getName();
-        final String hashCode = Integer.toHexString(System.identityHashCode(object));
-        return className + "@" + hashCode;
+        return FTagView.createTag(object);
     }
 }
