@@ -21,7 +21,7 @@ public class FTagView extends FrameLayout implements ITagView
     }
 
     @Override
-    public String getViewTag()
+    public final String getViewTag()
     {
         return mViewTag;
     }
