@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-public class FTagView extends FrameLayout implements FTagViewManager.ITagView
+public class FTagView extends FrameLayout implements ITagView
 {
     private final String mViewTag;
 

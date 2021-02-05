@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.sd.lib.tag_view.FTagViewManager;
+import com.sd.lib.tag_view.ITagView;
 
 public class TestView extends FrameLayout
 {
@@ -21,7 +22,7 @@ public class TestView extends FrameLayout
     protected void onAttachedToWindow()
     {
         super.onAttachedToWindow();
-        final FTagViewManager.ITagView tagView = FTagViewManager.getDefault().findTagView(this);
+        final ITagView tagView = FTagViewManager.getDefault().findTagView(this);
         Log.i(TestView.class.getSimpleName(), "findTagView:" + tagView);
     }
 }

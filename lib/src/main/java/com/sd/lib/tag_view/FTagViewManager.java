@@ -233,11 +233,6 @@ public class FTagViewManager
         }
     }
 
-    public interface ITagView
-    {
-        String getViewTag();
-    }
-
     private static boolean isAttached(View view)
     {
         if (view == null)
