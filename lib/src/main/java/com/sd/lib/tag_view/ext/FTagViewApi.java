@@ -30,7 +30,7 @@ public class FTagViewApi implements ITagView.ItemManager
     {
         final ITagView tagView = findTagView();
         if (tagView == null)
-            return null;
+            return ITagView.EMPTY_VIEW_TAG;
 
         return tagView.getViewTag();
     }

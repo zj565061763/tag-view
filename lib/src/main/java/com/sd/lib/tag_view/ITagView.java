@@ -1,7 +1,12 @@
 package com.sd.lib.tag_view;
 
+import java.util.UUID;
+
 public interface ITagView
 {
+    /** 空的View标识 */
+    String EMPTY_VIEW_TAG = UUID.randomUUID().toString();
+
     /**
      * 返回View标识
      *
