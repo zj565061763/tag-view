@@ -68,7 +68,7 @@ public class FTagView extends FrameLayout implements ITagView
             {
                 item = createItem(clazz);
                 if (item == null)
-                    throw new NullPointerException("createItem method return null");
+                    throw new RuntimeException("createItem method return null");
 
                 nItemHolder.put(clazz, item);
                 item.init(FTagView.this);
