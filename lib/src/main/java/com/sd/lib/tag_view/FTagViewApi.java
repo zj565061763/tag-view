@@ -19,6 +19,16 @@ public class FTagViewApi implements ITagView.ItemManager
     }
 
     /**
+     * 是否已经准备好
+     *
+     * @return
+     */
+    public boolean isPrepared()
+    {
+        return Utils.isAttached(mView);
+    }
+
+    /**
      * 准备调用当前对象的api
      *
      * @param runnable
@@ -28,7 +38,7 @@ public class FTagViewApi implements ITagView.ItemManager
         if (runnable == null)
             return;
 
-        if (Utils.isAttached(mView))
+        if (isPrepared())
         {
             runnable.run();
         } else
