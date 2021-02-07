@@ -2,14 +2,9 @@ package com.sd.lib.tag_view;
 
 import android.view.View;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 public class FTagViewApi implements ITagView.ItemManager
 {
     private final View mView;
-    private final Map<Runnable, String> mMapRunnable = new ConcurrentHashMap<>();
 
     public FTagViewApi(View view)
     {
@@ -48,32 +43,7 @@ public class FTagViewApi implements ITagView.ItemManager
             callback.run();
         } else
         {
-            final Runnable runnable = new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    mMapRunnable.remove(this);
-                    callback.run();
-                }
-            };
-
-            mMapRunnable.put(runnable, "");
-            mView.post(runnable);
-        }
-    }
-
-    /**
-     * 取消准备
-     */
-    public void cancelPrepare()
-    {
-        final Iterator<Runnable> it = mMapRunnable.keySet().iterator();
-        while (it.hasNext())
-        {
-            final Runnable item = it.next();
-            mView.removeCallbacks(item);
-            it.remove();
+            mView.post(callback);
         }
     }
 
