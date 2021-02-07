@@ -77,13 +77,12 @@ public class FTagView extends FrameLayout implements ITagView
         }
 
         @Override
-        public synchronized void clearItem()
+        public synchronized void destroyItem()
         {
             for (Item item : nItemHolder.values())
             {
                 item.destroy();
             }
-            nItemHolder.clear();
         }
     }
 

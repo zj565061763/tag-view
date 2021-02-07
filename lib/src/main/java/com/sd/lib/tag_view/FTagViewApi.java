@@ -89,13 +89,13 @@ public class FTagViewApi implements ITagView.ItemManager
     }
 
     @Override
-    public void clearItem()
+    public void destroyItem()
     {
         final ITagView tagView = findTagView();
         if (tagView == null)
             return;
 
-        tagView.getItemManager().clearItem();
+        tagView.getItemManager().destroyItem();
     }
 
     public interface PrepareCallback

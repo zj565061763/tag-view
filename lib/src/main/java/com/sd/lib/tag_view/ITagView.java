@@ -42,9 +42,9 @@ public interface ITagView
         <T extends Item> T getItem(Class<T> clazz);
 
         /**
-         * 清空并销毁Item
+         * 销毁Item
          */
-        void clearItem();
+        void destroyItem();
     }
 
     interface Item

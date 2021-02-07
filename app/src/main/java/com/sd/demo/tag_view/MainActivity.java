@@ -25,6 +25,6 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy()
     {
         super.onDestroy();
-        mBinding.viewTag.getItemManager().clearItem();
+        mBinding.viewTag.getItemManager().destroyItem();
     }
 }
