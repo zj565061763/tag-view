@@ -33,17 +33,24 @@ public class FTagViewApi implements ITagView.ItemManager
      *
      * @param callback
      */
-    public void prepare(final Runnable callback)
+    public void prepare(final PrepareCallback callback)
     {
         if (callback == null)
             return;
 
         if (isPrepared())
         {
-            callback.run();
+            callback.onPrepared(FTagViewApi.this);
         } else
         {
-            mView.post(callback);
+            mView.post(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    prepare(callback);
+                }
+            });
         }
     }
 
@@ -89,5 +96,10 @@ public class FTagViewApi implements ITagView.ItemManager
             return;
 
         tagView.getItemManager().clearItem();
+    }
+
+    public interface PrepareCallback
+    {
+        void onPrepared(FTagViewApi tagViewApi);
     }
 }

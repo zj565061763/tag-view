@@ -18,14 +18,14 @@ public class TestView extends FrameLayout
     public TestView(@NonNull Context context, @Nullable AttributeSet attrs)
     {
         super(context, attrs);
-        mTagViewApi.prepare(new Runnable()
+        mTagViewApi.prepare(new FTagViewApi.PrepareCallback()
         {
             @Override
-            public void run()
+            public void onPrepared(FTagViewApi tagViewApi)
             {
                 Log.i(TestView.class.getSimpleName(), "FTagViewApi"
-                        + " getViewTag:" + mTagViewApi.getViewTag()
-                        + " getItem:" + mTagViewApi.getItem(TestItem.class));
+                        + " getViewTag:" + tagViewApi.getViewTag()
+                        + " getItem:" + tagViewApi.getItem(TestItem.class));
             }
         });
     }
