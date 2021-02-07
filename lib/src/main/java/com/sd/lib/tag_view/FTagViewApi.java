@@ -2,9 +2,14 @@ package com.sd.lib.tag_view;
 
 import android.view.View;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class FTagViewApi implements ITagView.ItemManager
 {
     private final View mView;
+    private final Map<Runnable, String> mMapRunnable = new ConcurrentHashMap<>();
 
     public FTagViewApi(View view)
     {
@@ -31,19 +36,44 @@ public class FTagViewApi implements ITagView.ItemManager
     /**
      * 准备调用当前对象的api
      *
-     * @param runnable
+     * @param callback
      */
-    public void prepare(Runnable runnable)
+    public void prepare(final Runnable callback)
     {
-        if (runnable == null)
+        if (callback == null)
             return;
 
         if (isPrepared())
         {
-            runnable.run();
+            callback.run();
         } else
         {
+            final Runnable runnable = new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    mMapRunnable.remove(this);
+                    callback.run();
+                }
+            };
+
+            mMapRunnable.put(runnable, "");
             mView.post(runnable);
+        }
+    }
+
+    /**
+     * 取消准备
+     */
+    public void cancelPrepare()
+    {
+        final Iterator<Runnable> it = mMapRunnable.keySet().iterator();
+        while (it.hasNext())
+        {
+            final Runnable item = it.next();
+            mView.removeCallbacks(item);
+            it.remove();
         }
     }
 
