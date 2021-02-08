@@ -23,7 +23,7 @@ class Utils
     public static String getObjectId(Object obj)
     {
         final String className = obj.getClass().getName();
-        final String hashCode = Integer.toHexString(System.identityHashCode(obj));
-        return className + "@" + hashCode;
+        final int identityHashCode = System.identityHashCode(obj);
+        return className + "@" + Integer.toHexString(identityHashCode);
     }
 }
