@@ -20,10 +20,10 @@ class Utils
             return view.getWindowToken() != null;
     }
 
-    public static String getObjectId(Object object)
+    public static String getObjectId(Object obj)
     {
-        final String className = object.getClass().getName();
-        final String hashCode = Integer.toHexString(System.identityHashCode(object));
+        final String className = obj.getClass().getName();
+        final String hashCode = Integer.toHexString(System.identityHashCode(obj));
         return className + "@" + hashCode;
     }
 }
