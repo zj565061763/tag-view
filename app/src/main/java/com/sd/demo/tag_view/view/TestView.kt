@@ -8,19 +8,16 @@ import com.sd.demo.tag_view.item.TestItem
 import com.sd.demo.tag_view.view.TestView
 import com.sd.lib.tag_view.FTagViewApi
 
-class TestView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs)
-{
+class TestView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
     private val mTagViewApi = FTagViewApi(this@TestView)
 
-    init
-    {
+    init {
         mTagViewApi.prepare { tagViewApi ->
             Log.i(TestView::class.simpleName, "FTagViewApi getViewTag:${tagViewApi.viewTag} getItem:${tagViewApi.getItem(TestItem::class.java)}")
         }
     }
 
-    override fun onAttachedToWindow()
-    {
+    override fun onAttachedToWindow() {
         super.onAttachedToWindow()
     }
 }
