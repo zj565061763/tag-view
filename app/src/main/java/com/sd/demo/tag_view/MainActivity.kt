@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
     private var mBinding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        FTagViewManager.getDefault().setDebug(true)
+        FTagViewManager.default.mIsDebug = true;
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding!!.root)

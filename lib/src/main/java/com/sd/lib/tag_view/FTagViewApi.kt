@@ -13,7 +13,7 @@ class FTagViewApi(view: View?) {
     }
 
     private fun findTagView(): ITagView? {
-        return FTagViewManager.getDefault().findTagView(mView)
+        return FTagViewManager.default.findTagView(mView)
     }
 
     /**
