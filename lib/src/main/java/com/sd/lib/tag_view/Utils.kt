@@ -16,8 +16,9 @@ internal object Utils {
 
     @JvmStatic
     fun getObjectId(obj: Any): String {
-        val className = obj.javaClass.name
-        val identityHashCode = System.identityHashCode(obj)
-        return "${className}@${Integer.toHexString(identityHashCode)}"
+        val className = obj::class.qualifiedName
+        val hashCode = System.identityHashCode(obj)
+        val hashCodeString = Integer.toHexString(hashCode)
+        return "${className}@${hashCodeString}"
     }
 }
