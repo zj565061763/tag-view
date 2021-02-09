@@ -1,36 +1,38 @@
-package com.sd.lib.tag_view;
+package com.sd.lib.tag_view
 
-import java.util.UUID;
+import java.util.*
 
-public interface ITagView
-{
-    /** 空的View标识 */
-    String EMPTY_VIEW_TAG = UUID.randomUUID().toString();
+interface ITagView {
+
+    companion object {
+        /** 空的View标识  */
+        @JvmField
+        val EMPTY_VIEW_TAG = UUID.randomUUID().toString()
+    }
 
     /**
      * 返回View标识
      *
      * @return
      */
-    String getViewTag();
+    val viewTag: String?
 
     /**
      * Item管理对象
      *
      * @return
      */
-    ItemManager getItemManager();
+    val itemManager: ItemManager
 
-    interface ItemManager
-    {
+    interface ItemManager {
         /**
          * 查找指定类型的Item，如果不存在则返回null
          *
          * @param clazz
          * @param <T>
          * @return
-         */
-        <T extends Item> T findItem(Class<T> clazz);
+        </T> */
+        fun <T : Item> findItem(clazz: Class<T>): T
 
         /**
          * 返回指定类型的Item，如果不存在则创建对象返回
@@ -38,27 +40,26 @@ public interface ITagView
          * @param clazz
          * @param <T>
          * @return
-         */
-        <T extends Item> T getItem(Class<T> clazz);
+        </T> */
+        fun <T : Item> getItem(clazz: Class<T>): T
 
         /**
          * 销毁Item
          */
-        void destroyItem();
+        fun destroyItem()
     }
 
-    interface Item
-    {
+    interface Item {
         /**
          * 初始化
          *
          * @param tagView
          */
-        void init(ITagView tagView);
+        fun init(tagView: ITagView)
 
         /**
          * 销毁
          */
-        void destroy();
+        fun destroy()
     }
 }
