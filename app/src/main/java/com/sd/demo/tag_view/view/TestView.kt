@@ -12,9 +12,11 @@ class TestView(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     private val mTagViewApi = FTagViewApi(this@TestView)
 
     init {
-        mTagViewApi.prepare { tagViewApi ->
-            Log.i(TestView::class.simpleName, "FTagViewApi getViewTag:${tagViewApi.viewTag} getItem:${tagViewApi.getItem(TestItem::class.java)}")
-        }
+        mTagViewApi.prepare(object : FTagViewApi.PrepareCallback {
+            override fun onPrepared(tagViewApi: FTagViewApi) {
+                Log.i(TestView::class.java.simpleName, "FTagViewApi getViewTag:${tagViewApi.viewTag} getItem:${tagViewApi.getItem(TestItem::class.java)}")
+            }
+        })
     }
 
     override fun onAttachedToWindow() {

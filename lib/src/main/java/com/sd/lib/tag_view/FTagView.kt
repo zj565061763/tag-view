@@ -16,7 +16,7 @@ class FTagView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
     private inner class InternalItemManager : ItemManager {
         private val nItemHolder: MutableMap<Class<out ITagView.Item>, ITagView.Item> = ConcurrentHashMap()
 
-        override fun <T : ITagView.Item> findItem(clazz: Class<T>): T {
+        override fun <T : ITagView.Item> findItem(clazz: Class<T>): T? {
             checkItemClass(clazz)
             val item = nItemHolder[clazz] ?: null
             return item as T

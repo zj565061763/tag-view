@@ -32,7 +32,7 @@ interface ITagView {
          * @param <T>
          * @return
         </T> */
-        fun <T : Item> findItem(clazz: Class<T>): T
+        fun <T : Item> findItem(clazz: Class<T>): T?
 
         /**
          * 返回指定类型的Item，如果不存在则创建对象返回
