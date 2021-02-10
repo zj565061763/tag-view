@@ -70,6 +70,7 @@ class FTagViewManager {
             }
             return tagView
         }
+
         throw RuntimeException(ITagView::class.java.simpleName + " was not found int view tree " + view)
     }
 
