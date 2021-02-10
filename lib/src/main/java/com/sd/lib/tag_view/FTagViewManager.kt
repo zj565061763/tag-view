@@ -60,14 +60,14 @@ class FTagViewManager {
                 continue
             }
 
+            cacheView(tagView, listChild)
             if (mIsDebug) {
                 Log.i(FTagViewManager::class.java.simpleName, """findTagView view:${getObjectId(view)} tagView:${getObjectId(tagView)}
                     | level:${listChild.size}
+                    | cacheSize:${mMapViewCache.size}
                 """.trimMargin()
                 )
             }
-
-            cacheView(tagView, listChild)
             return tagView
         }
         throw RuntimeException(ITagView::class.java.simpleName + " was not found int view tree " + view)
@@ -90,18 +90,25 @@ class FTagViewManager {
     private fun cacheView(tagView: ITagView, list: List<View>) {
         synchronized(this@FTagViewManager) {
             for (view in list) {
-                if (!isAttached(view)) continue
+                if (!isAttached(view))
+                    continue
+
                 val put = mMapViewCache.put(view, tagView)
-                if (put == null) view.addOnAttachStateChangeListener(mOnAttachStateChangeListener)
+                if (put == null) {
+                    view.addOnAttachStateChangeListener(mOnAttachStateChangeListener)
+                }
             }
         }
     }
 
     private val mOnAttachStateChangeListener: View.OnAttachStateChangeListener = object : View.OnAttachStateChangeListener {
         override fun onViewAttachedToWindow(v: View) {}
+
         override fun onViewDetachedFromWindow(v: View) {
             v.removeOnAttachStateChangeListener(this)
-            synchronized(this@FTagViewManager) { mMapViewCache.remove(v) }
+            synchronized(this@FTagViewManager) {
+                mMapViewCache.remove(v)
+            }
         }
     }
 }
