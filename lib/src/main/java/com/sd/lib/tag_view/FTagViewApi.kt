@@ -71,7 +71,7 @@ class FTagViewApi(view: View?) {
         tagView.itemManager.destroyItem()
     }
 
-    interface PrepareCallback {
+    fun interface PrepareCallback {
         fun onPrepared(tagViewApi: FTagViewApi)
     }
 }
