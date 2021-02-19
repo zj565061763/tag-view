@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap
 class FTagViewManager {
 
     companion object {
+        @JvmStatic
         val default: FTagViewManager by lazy {
             FTagViewManager()
         }
