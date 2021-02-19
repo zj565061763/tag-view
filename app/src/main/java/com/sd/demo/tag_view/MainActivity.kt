@@ -6,17 +6,17 @@ import com.sd.demo.tag_view.databinding.ActivityMainBinding
 import com.sd.lib.tag_view.FTagViewManager
 
 class MainActivity : AppCompatActivity() {
-    private var mBinding: ActivityMainBinding? = null
+    private lateinit var mBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         FTagViewManager.default.mIsDebug = true;
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(mBinding!!.root)
+        setContentView(mBinding.root)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mBinding!!.viewTag.itemManager.destroyItem()
+        mBinding.viewTag.itemManager.destroyItem()
     }
 }
