@@ -1,7 +1,6 @@
 package com.sd.lib.tag_view
 
 import android.view.View
-import com.sd.lib.tag_view.FTagViewApi
 import com.sd.lib.tag_view.Utils.isAttached
 
 class FTagViewApi(view: View?) {

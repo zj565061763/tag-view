@@ -13,9 +13,7 @@ class FTagViewManager {
 
     companion object {
         @JvmStatic
-        val default: FTagViewManager by lazy {
-            FTagViewManager()
-        }
+        val default: FTagViewManager by lazy { FTagViewManager() }
     }
 
     private val mMapViewCache: MutableMap<View, ITagView> = ConcurrentHashMap()
@@ -28,9 +26,8 @@ class FTagViewManager {
      * @return
      */
     fun findTagView(view: View): ITagView? {
-        if (!isAttached(view)) {
+        if (!isAttached(view))
             return null
-        }
 
         if (mIsDebug) {
             Log.i(FTagViewManager::class.java.simpleName, "findTagView view:${getObjectId(view)} ---------->")
@@ -76,11 +73,7 @@ class FTagViewManager {
     }
 
     private fun checkTagView(view: View): ITagView? {
-        if (view is ITagView) {
-            return view
-        } else {
-            return mMapViewCache[view]
-        }
+        return if (view is ITagView) view else mMapViewCache[view]
     }
 
     /**
