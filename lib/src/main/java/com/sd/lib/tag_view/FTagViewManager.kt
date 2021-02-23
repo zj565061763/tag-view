@@ -2,11 +2,8 @@ package com.sd.lib.tag_view
 
 import android.util.Log
 import android.view.View
-import com.sd.lib.tag_view.FTagViewManager
-import com.sd.lib.tag_view.ITagView
 import com.sd.lib.tag_view.Utils.getObjectId
 import com.sd.lib.tag_view.Utils.isAttached
-import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 class FTagViewManager {
@@ -26,8 +23,9 @@ class FTagViewManager {
      * @return
      */
     fun findTagView(view: View): ITagView? {
-        if (!isAttached(view))
+        if (!isAttached(view)) {
             return null
+        }
 
         if (mIsDebug) {
             Log.i(FTagViewManager::class.java.simpleName, "findTagView view:${getObjectId(view)} ---------->")
@@ -41,8 +39,7 @@ class FTagViewManager {
             return tagView
         }
 
-        val listChild: MutableList<View> = LinkedList()
-        listChild.add(view)
+        val listChild = mutableListOf(view)
 
         var viewParent = view.parent
         while (viewParent is View) {
