@@ -82,8 +82,9 @@ class FTagViewManager {
     private fun cacheView(tagView: ITagView, list: List<View>) {
         synchronized(this@FTagViewManager) {
             for (view in list) {
-                if (!isAttached(view))
+                if (!isAttached(view)) {
                     continue
+                }
 
                 val put = mMapViewCache.put(view, tagView)
                 if (put == null) {
