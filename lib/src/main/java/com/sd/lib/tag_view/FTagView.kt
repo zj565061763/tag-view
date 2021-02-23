@@ -24,13 +24,13 @@ class FTagView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, a
 
         override fun <T : ITagView.Item> getItem(clazz: Class<T>): T {
             checkItemClass(clazz)
-
-            val cacheItem = nItemHolder[clazz]
-            if (cacheItem != null)
-                return cacheItem as T;
-
-            val item = createItem(clazz)
             synchronized(this@InternalItemManager) {
+                val cacheItem = nItemHolder[clazz]
+                if (cacheItem != null) {
+                    return cacheItem as T
+                }
+
+                val item = createItem(clazz)
                 nItemHolder[clazz] = item
                 item.init(this@FTagView)
                 return item
