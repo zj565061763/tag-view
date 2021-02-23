@@ -103,7 +103,7 @@ class FTagViewManager {
                 mMapViewCache.remove(v)
 
                 if (mIsDebug && mMapViewCache.isEmpty()) {
-                    Log.i(FTagViewManager::class.java.simpleName, "cacheSize empty")
+                    Log.i(FTagViewManager::class.java.simpleName, "view cache empty")
                 }
             }
         }
