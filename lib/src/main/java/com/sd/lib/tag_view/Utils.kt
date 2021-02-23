@@ -7,7 +7,10 @@ internal object Utils {
 
     @JvmStatic
     fun isAttached(view: View?): Boolean {
-        if (view == null) return false
+        if (view == null) {
+            return false
+        }
+
         return if (Build.VERSION.SDK_INT >= 19)
             view.isAttachedToWindow
         else
@@ -16,9 +19,8 @@ internal object Utils {
 
     @JvmStatic
     fun getObjectId(obj: Any): String {
-        val className = obj.javaClass.name
         val hashCode = System.identityHashCode(obj)
         val hashCodeString = Integer.toHexString(hashCode)
-        return "${className}@${hashCodeString}"
+        return "${obj.javaClass.name}@${hashCodeString}"
     }
 }
