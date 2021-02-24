@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'maven-publish'
 
 def libVersionCode = 20210224
-def libVersionName = "1.0.0-beta4"
+def libVersionName = "1.0.0-beta5"
 
 android {
     compileSdkVersion 28
