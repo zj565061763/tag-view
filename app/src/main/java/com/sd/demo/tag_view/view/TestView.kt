@@ -11,13 +11,9 @@ import com.sd.lib.tag_view.FTagViewApi
 class TestView : FrameLayout {
     private val mTagViewApi = FTagViewApi(this@TestView)
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        Log.i(TestView::class.java.simpleName, "secondary constructor instance:${this}")
-    }
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
 
     init {
-        Log.i(TestView::class.java.simpleName, "init block context:${context} instance:${this}")
-
         mTagViewApi.prepare { tagViewApi ->
             Log.i(TestView::class.java.simpleName, "FTagViewApi getViewTag:${tagViewApi.viewTag} getItem:${tagViewApi.getItem(TestItem::class.java)}")
         }
