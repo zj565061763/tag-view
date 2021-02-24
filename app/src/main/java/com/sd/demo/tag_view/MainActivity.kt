@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     suspend fun testLoading(): String {
         Log.i(TAG, "testLoading start, thread:${Thread.currentThread().name}")
-        delay(60 * 1000)
+        delay(5 * 1000)
         Log.i(TAG, "testLoading finish, thread:${Thread.currentThread().name}")
         return "result"
     }
