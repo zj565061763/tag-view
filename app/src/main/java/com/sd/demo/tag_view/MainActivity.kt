@@ -1,12 +1,16 @@
 package com.sd.demo.tag_view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.sd.demo.tag_view.databinding.ActivityMainBinding
 import com.sd.lib.tag_view.FTagViewManager
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val TAG = MainActivity::class.java.simpleName
@@ -19,10 +23,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
+        mMainScope.launch {
+            Log.i(TAG, "launch start")
+            val result = testLoading()
+            Log.i(TAG, "launch finish result:$result")
+        }
     }
 
     override fun onClick(v: View?) {
+        Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
+    }
 
+    suspend fun testLoading(): String {
+        Log.i(TAG, "testLoading start")
+        delay(60 * 1000)
+        Log.i(TAG, "testLoading finish")
+        return "result"
     }
 
     override fun onDestroy() {
