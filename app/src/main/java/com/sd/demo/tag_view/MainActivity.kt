@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(mBinding.root)
 
         mMainScope.launch {
-            Log.i(TAG, "launch start")
+            Log.i(TAG, "launch start, thread:${Thread.currentThread().name}")
             val result = testLoading()
-            Log.i(TAG, "launch finish result:$result")
+            Log.i(TAG, "launch finish result:$result, thread:${Thread.currentThread().name}")
         }
     }
 
@@ -36,9 +36,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     suspend fun testLoading(): String {
-        Log.i(TAG, "testLoading start")
+        Log.i(TAG, "testLoading start, thread:${Thread.currentThread().name}")
         delay(60 * 1000)
-        Log.i(TAG, "testLoading finish")
+        Log.i(TAG, "testLoading finish, thread:${Thread.currentThread().name}")
         return "result"
     }
 
