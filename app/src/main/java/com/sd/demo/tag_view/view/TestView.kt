@@ -15,7 +15,7 @@ class TestView : FrameLayout {
 
     init {
         mTagViewApi.prepare {
-            Log.i(TestView::class.java.simpleName, "FTagViewApi getViewTag:${it.viewTag} getItem:${it.itemManager.getItem(TestItem::class.java)}")
+            Log.i(TestView::class.java.simpleName, "FTagViewApi getViewTag:${it.viewTag} getItem:${it.getItem(TestItem::class.java)}")
         }
     }
 

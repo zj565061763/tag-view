@@ -18,36 +18,27 @@ interface ITagView {
     val viewTag: String?
 
     /**
-     * Item管理对象
+     * 查找指定类型的Item，如果不存在则返回null
      *
+     * @param clazz
+     * @param <T>
      * @return
+    </T> */
+    fun <T : Item> findItem(clazz: Class<T>): T?
+
+    /**
+     * 返回指定类型的Item，如果不存在则创建对象返回
+     *
+     * @param clazz
+     * @param <T>
+     * @return
+    </T> */
+    fun <T : Item> getItem(clazz: Class<T>): T
+
+    /**
+     * 销毁Item
      */
-    val itemManager: ItemManager
-
-    interface ItemManager {
-        /**
-         * 查找指定类型的Item，如果不存在则返回null
-         *
-         * @param clazz
-         * @param <T>
-         * @return
-        </T> */
-        fun <T : Item> findItem(clazz: Class<T>): T?
-
-        /**
-         * 返回指定类型的Item，如果不存在则创建对象返回
-         *
-         * @param clazz
-         * @param <T>
-         * @return
-        </T> */
-        fun <T : Item> getItem(clazz: Class<T>): T
-
-        /**
-         * 销毁Item
-         */
-        fun destroyItem()
-    }
+    fun destroyItem()
 
     interface Item {
         /**

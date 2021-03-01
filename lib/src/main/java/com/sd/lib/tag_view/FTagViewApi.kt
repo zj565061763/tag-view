@@ -51,7 +51,7 @@ class FTagViewApi(view: View?) {
      */
     fun <T : ITagView.Item> findItem(clazz: Class<T>): T? {
         val tagView = findTagView() ?: return null
-        return tagView.itemManager.findItem(clazz)
+        return tagView.findItem(clazz)
     }
 
     /**
@@ -59,7 +59,7 @@ class FTagViewApi(view: View?) {
      */
     fun <T : ITagView.Item> getItem(clazz: Class<T>): T? {
         val tagView = findTagView() ?: return null
-        return tagView.itemManager.getItem(clazz)
+        return tagView.getItem(clazz)
     }
 
     /**
@@ -67,7 +67,7 @@ class FTagViewApi(view: View?) {
      */
     fun destroyItem() {
         val tagView = findTagView() ?: return;
-        tagView.itemManager.destroyItem()
+        tagView.destroyItem()
     }
 
     fun interface PrepareCallback {
