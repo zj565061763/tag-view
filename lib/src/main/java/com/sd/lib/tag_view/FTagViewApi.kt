@@ -10,16 +10,9 @@ class FTagViewApi(view: View?) {
         mView = view
     }
 
-    private fun findTagView(): ITagView? {
+    fun findTagView(): ITagView? {
         return FTagViewManager.default.findTagView(mView)
     }
-
-    /**
-     * 是否已经准备好
-     *
-     * @return
-     */
-    val isPrepared: Boolean get() = Utils.isAttached(mView)
 
     /**
      * 准备调用当前对象的api
