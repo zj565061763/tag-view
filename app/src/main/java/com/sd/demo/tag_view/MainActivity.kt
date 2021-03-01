@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        mBinding.viewTag.itemManager.destroyItem()
+        mBinding.viewTag.destroyItem()
         mMainScope.cancel()
     }
 }
