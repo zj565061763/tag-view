@@ -14,8 +14,8 @@ class TestView : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
 
     init {
-        mTagViewApi.prepare { tagViewApi ->
-            Log.i(TestView::class.java.simpleName, "FTagViewApi getViewTag:${tagViewApi.viewTag} getItem:${tagViewApi.getItem(TestItem::class.java)}")
+        mTagViewApi.prepare {
+            Log.i(TestView::class.java.simpleName, "FTagViewApi getViewTag:${it.viewTag} getItem:${it.itemManager.getItem(TestItem::class.java)}")
         }
     }
 

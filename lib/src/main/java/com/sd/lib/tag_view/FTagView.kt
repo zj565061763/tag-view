@@ -4,13 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.sd.lib.tag_view.ITagView.ItemManager
-import com.sd.lib.tag_view.Utils.getObjectId
 import java.lang.reflect.Modifier
 import java.util.concurrent.ConcurrentHashMap
 
 class FTagView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs), ITagView {
 
-    override val viewTag: String = getObjectId(this)
+    override val viewTag: String = Utils.getObjectId(this)
     override val itemManager: ItemManager by lazy { InternalItemManager() }
 
     private inner class InternalItemManager : ItemManager {

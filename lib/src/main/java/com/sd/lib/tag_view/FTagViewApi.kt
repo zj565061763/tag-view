@@ -1,7 +1,6 @@
 package com.sd.lib.tag_view
 
 import android.view.View
-import com.sd.lib.tag_view.Utils.isAttached
 
 class FTagViewApi(view: View?) {
     private val mView: View
@@ -20,7 +19,7 @@ class FTagViewApi(view: View?) {
      *
      * @return
      */
-    val isPrepared: Boolean get() = isAttached(mView)
+    val isPrepared: Boolean get() = Utils.isAttached(mView)
 
     /**
      * 准备调用当前对象的api
@@ -28,8 +27,9 @@ class FTagViewApi(view: View?) {
      * @param callback
      */
     fun prepare(callback: PrepareCallback) {
-        if (isPrepared) {
-            callback.onPrepared(this@FTagViewApi)
+        val tagView = findTagView()
+        if (tagView != null) {
+            callback.onPrepared(tagView)
         } else {
             mView.post { prepare(callback) }
         }
@@ -71,6 +71,6 @@ class FTagViewApi(view: View?) {
     }
 
     fun interface PrepareCallback {
-        fun onPrepared(tagViewApi: FTagViewApi)
+        fun onPrepared(tagViewApi: ITagView)
     }
 }

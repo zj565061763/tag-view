@@ -2,8 +2,6 @@ package com.sd.lib.tag_view
 
 import android.util.Log
 import android.view.View
-import com.sd.lib.tag_view.Utils.getObjectId
-import com.sd.lib.tag_view.Utils.isAttached
 import java.util.concurrent.ConcurrentHashMap
 
 class FTagViewManager {
@@ -23,18 +21,18 @@ class FTagViewManager {
      * @return
      */
     fun findTagView(view: View): ITagView? {
-        if (!isAttached(view)) {
+        if (!Utils.isAttached(view)) {
             return null
         }
 
         if (mIsDebug) {
-            Log.i(FTagViewManager::class.java.simpleName, "findTagView view:${getObjectId(view)} ---------->")
+            Log.i(FTagViewManager::class.java.simpleName, "findTagView view:${Utils.getObjectId(view)} ---------->")
         }
 
         var tagView = checkTagView(view)
         if (tagView != null) {
             if (mIsDebug) {
-                Log.i(FTagViewManager::class.java.simpleName, "findTagView view:${getObjectId(view)} tagView:${getObjectId(tagView)}")
+                Log.i(FTagViewManager::class.java.simpleName, "findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)}")
             }
             return tagView
         }
@@ -44,7 +42,7 @@ class FTagViewManager {
         var viewParent = view.parent
         while (viewParent is View) {
             val parent = viewParent as View
-            if (!isAttached(parent)) {
+            if (!Utils.isAttached(parent)) {
                 return null
             }
 
@@ -57,7 +55,7 @@ class FTagViewManager {
 
             cacheView(tagView, listChild)
             if (mIsDebug) {
-                Log.i(FTagViewManager::class.java.simpleName, """findTagView view:${getObjectId(view)} tagView:${getObjectId(tagView)}
+                Log.i(FTagViewManager::class.java.simpleName, """findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)}
                     | level:${listChild.size}
                     | cacheSize:${mMapViewCache.size}
                 """.trimMargin()
@@ -82,7 +80,7 @@ class FTagViewManager {
     private fun cacheView(tagView: ITagView, list: List<View>) {
         synchronized(this@FTagViewManager) {
             for (view in list) {
-                if (!isAttached(view)) {
+                if (!Utils.isAttached(view)) {
                     continue
                 }
 
