@@ -6,9 +6,12 @@ import android.widget.FrameLayout
 import java.lang.reflect.Modifier
 import java.util.concurrent.ConcurrentHashMap
 
-class FTagView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs), ITagView {
+class FTagView : FrameLayout, ITagView {
 
     private val mItemHolder: MutableMap<Class<out ITagView.Item>, ITagView.Item> = ConcurrentHashMap()
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+
     override val viewTag: String = Utils.getObjectId(this)
 
     override fun <T : ITagView.Item> findItem(clazz: Class<T>): T? {
