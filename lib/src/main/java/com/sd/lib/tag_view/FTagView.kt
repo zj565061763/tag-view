@@ -6,7 +6,7 @@ import android.widget.FrameLayout
 import java.lang.reflect.Modifier
 import java.util.concurrent.ConcurrentHashMap
 
-class FTagView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs), ITagView {
+class FTagView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs), ITagView {
 
     private val mItemHolder: MutableMap<Class<out ITagView.Item>, ITagView.Item> = ConcurrentHashMap()
     override val viewTag: String = Utils.getObjectId(this)
