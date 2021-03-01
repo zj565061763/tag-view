@@ -47,7 +47,7 @@ class FTagViewApi(view: View?) {
         }
 
     /**
-     * [ITagView.ItemManager.findItem]
+     * [ITagView.findItem]
      */
     fun <T : ITagView.Item> findItem(clazz: Class<T>): T? {
         val tagView = findTagView() ?: return null
@@ -55,7 +55,7 @@ class FTagViewApi(view: View?) {
     }
 
     /**
-     *  [ITagView.ItemManager.getItem]
+     *  [ITagView.getItem]
      */
     fun <T : ITagView.Item> getItem(clazz: Class<T>): T? {
         val tagView = findTagView() ?: return null
@@ -63,7 +63,7 @@ class FTagViewApi(view: View?) {
     }
 
     /**
-     * [ITagView.ItemManager.destroyItem]
+     * [ITagView.destroyItem]
      */
     fun destroyItem() {
         val tagView = findTagView() ?: return;
