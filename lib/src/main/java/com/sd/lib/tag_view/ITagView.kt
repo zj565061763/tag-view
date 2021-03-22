@@ -46,11 +46,11 @@ interface ITagView {
          *
          * @param tagView
          */
-        fun init(tagView: ITagView)
+        fun initItem(tagView: ITagView)
 
         /**
          * 销毁
          */
-        fun destroy()
+        fun destroyItem()
     }
 }

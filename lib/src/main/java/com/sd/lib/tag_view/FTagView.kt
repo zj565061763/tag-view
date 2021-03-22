@@ -30,7 +30,7 @@ class FTagView : FrameLayout, ITagView {
 
             val item = createItem(clazz)
             mItemHolder[clazz] = item
-            item.init(this@FTagView)
+            item.initItem(this@FTagView)
             return item
         }
     }
@@ -38,7 +38,7 @@ class FTagView : FrameLayout, ITagView {
     override fun destroyItem() {
         synchronized(this@FTagView) {
             for (item in mItemHolder.values) {
-                item.destroy()
+                item.destroyItem()
             }
         }
     }
