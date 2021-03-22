@@ -40,6 +40,9 @@ interface ITagView {
      */
     fun destroyItem()
 
+    /**
+     * Item必须有空参数的构造方法
+     */
     interface Item {
         /**
          * 初始化
