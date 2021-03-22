@@ -2,13 +2,8 @@ package com.sd.lib.tag_view
 
 import android.view.View
 
-class FTagViewApi(view: View?) {
-    private val mView: View
-
-    init {
-        requireNotNull(view) { "view is null" }
-        mView = view
-    }
+class FTagViewApi(view: View) {
+    private val mView: View = view
 
     fun findTagView(): ITagView? {
         return FTagViewManager.default.findTagView(mView)
@@ -24,7 +19,9 @@ class FTagViewApi(view: View?) {
         if (tagView != null) {
             callback.onPrepared(tagView)
         } else {
-            mView.post { prepare(callback) }
+            mView.post {
+                callback.onPrepared(findTagView()!!)
+            }
         }
     }
 
