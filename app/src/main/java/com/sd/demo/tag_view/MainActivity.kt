@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val mMainScope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        FTagViewManager.default.mIsDebug = true;
+        FTagViewManager.isDebug = true;
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)

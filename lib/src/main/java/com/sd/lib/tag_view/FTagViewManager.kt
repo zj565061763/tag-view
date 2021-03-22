@@ -4,34 +4,30 @@ import android.util.Log
 import android.view.View
 import java.util.concurrent.ConcurrentHashMap
 
-class FTagViewManager {
+object FTagViewManager {
 
-    companion object {
-        @JvmStatic
-        val default: FTagViewManager by lazy { FTagViewManager() }
-    }
-
-    private val mMapViewCache: MutableMap<View, ITagView> = ConcurrentHashMap()
-    var mIsDebug = false
+    private val mapViewCache: MutableMap<View, ITagView> = ConcurrentHashMap()
 
     /**
-     * 查找[ITagView]
-     *
-     * @param view
-     * @return
+     * 是否调试模式
+     */
+    var isDebug = false
+
+    /**
+     * 查找[view]所依附的[ITagView]
      */
     fun findTagView(view: View): ITagView? {
         if (!Utils.isAttached(view)) {
             return null
         }
 
-        if (mIsDebug) {
+        if (isDebug) {
             Log.i(FTagViewManager::class.java.simpleName, "findTagView view:${Utils.getObjectId(view)} ---------->")
         }
 
         var tagView = checkTagView(view)
         if (tagView != null) {
-            if (mIsDebug) {
+            if (isDebug) {
                 Log.i(FTagViewManager::class.java.simpleName, "findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)}")
             }
             return tagView
@@ -54,10 +50,10 @@ class FTagViewManager {
             }
 
             cacheView(tagView, listChild)
-            if (mIsDebug) {
+            if (isDebug) {
                 Log.i(FTagViewManager::class.java.simpleName, """findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)}
                     | level:${listChild.size}
-                    | cacheSize:${mMapViewCache.size}
+                    | cacheSize:${mapViewCache.size}
                 """.trimMargin()
                 )
             }
@@ -68,14 +64,11 @@ class FTagViewManager {
     }
 
     private fun checkTagView(view: View): ITagView? {
-        return if (view is ITagView) view else mMapViewCache[view]
+        return if (view is ITagView) view else mapViewCache[view]
     }
 
     /**
      * 缓存View
-     *
-     * @param tagView
-     * @param list
      */
     private fun cacheView(tagView: ITagView, list: List<View>) {
         synchronized(this@FTagViewManager) {
@@ -84,7 +77,7 @@ class FTagViewManager {
                     continue
                 }
 
-                val put = mMapViewCache.put(view, tagView)
+                val put = mapViewCache.put(view, tagView)
                 if (put == null) {
                     view.addOnAttachStateChangeListener(mOnAttachStateChangeListener)
                 }
@@ -98,10 +91,12 @@ class FTagViewManager {
         override fun onViewDetachedFromWindow(v: View) {
             v.removeOnAttachStateChangeListener(this)
             synchronized(this@FTagViewManager) {
-                mMapViewCache.remove(v)
+                mapViewCache.remove(v)
 
-                if (mIsDebug && mMapViewCache.isEmpty()) {
-                    Log.i(FTagViewManager::class.java.simpleName, "view cache empty")
+                if (isDebug) {
+                    if (mapViewCache.isEmpty()) {
+                        Log.i(FTagViewManager::class.java.simpleName, "view cache empty")
+                    }
                 }
             }
         }

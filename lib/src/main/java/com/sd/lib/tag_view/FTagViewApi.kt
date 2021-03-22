@@ -6,7 +6,7 @@ class FTagViewApi(view: View) {
     private val mView: View = view
 
     fun findTagView(): ITagView? {
-        return FTagViewManager.default.findTagView(mView)
+        return FTagViewManager.findTagView(mView)
     }
 
     /**
