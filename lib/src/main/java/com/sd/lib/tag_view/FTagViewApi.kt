@@ -53,6 +53,14 @@ class FTagViewApi(view: View) {
     }
 
     /**
+     * [ITagView.removeItem]
+     */
+    fun <T : ITagView.Item> removeItem(clazz: Class<T>): T? {
+        val tagView = findTagView() ?: return null
+        return tagView.removeItem(clazz)
+    }
+
+    /**
      * [ITagView.destroyItem]
      */
     fun destroyItem() {

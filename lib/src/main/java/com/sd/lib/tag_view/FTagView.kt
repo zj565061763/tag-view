@@ -35,11 +35,21 @@ class FTagView : FrameLayout, ITagView {
         }
     }
 
+    override fun <T : ITagView.Item> removeItem(clazz: Class<T>): T? {
+        checkItemClass(clazz)
+        synchronized(this@FTagView) {
+            val cacheItem = mItemHolder.remove(clazz) ?: return null
+            cacheItem.destroyItem()
+            return cacheItem as T
+        }
+    }
+
     override fun destroyItem() {
         synchronized(this@FTagView) {
             for (item in mItemHolder.values) {
                 item.destroyItem()
             }
+            mItemHolder.clear()
         }
     }
 
