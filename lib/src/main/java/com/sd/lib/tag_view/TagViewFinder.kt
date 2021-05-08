@@ -20,10 +20,6 @@ internal abstract class TagViewFinder {
     constructor(targetClass: Class<out ITagView>, isDebug: Boolean) {
         _targetClass = targetClass
         _isDebug = isDebug
-
-        if (isDebug) {
-            Log.i(TagViewFinder::class.java.simpleName, "create finder targetClass:${targetClass} finder:${Utils.getHashString(this@TagViewFinder)}")
-        }
     }
 
     /**
