@@ -4,8 +4,8 @@ plugins {
     id 'maven-publish'
 }
 
-def libVersionCode = 20210329
-def libVersionName = "1.0.0-beta8"
+def libVersionCode = 20210508
+def libVersionName = "1.0.0-beta9"
 
 android {
     compileSdkVersion 29
