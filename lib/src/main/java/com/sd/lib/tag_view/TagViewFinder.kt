@@ -22,7 +22,7 @@ internal abstract class TagViewFinder {
         _isDebug = isDebug
 
         if (isDebug) {
-            Log.i(TagViewFinder::class.java.simpleName, "create finder targetClass:${targetClass} hash:${Utils.getHashString(this@TagViewFinder)}")
+            Log.i(TagViewFinder::class.java.simpleName, "create finder targetClass:${targetClass} finder:${Utils.getHashString(this@TagViewFinder)}")
         }
     }
 
@@ -37,7 +37,7 @@ internal abstract class TagViewFinder {
         if (_isDebug) {
             Log.i(
                 TagViewFinder::class.java.simpleName,
-                "findTagView view:${Utils.getObjectId(view)} ----------> hash:${Utils.getHashString(this@TagViewFinder)}"
+                "findTagView view:${Utils.getObjectId(view)} ----------> finder:${Utils.getHashString(this@TagViewFinder)}"
             )
         }
 
@@ -46,7 +46,7 @@ internal abstract class TagViewFinder {
             if (_isDebug) {
                 Log.i(
                     TagViewFinder::class.java.simpleName,
-                    "findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)} hash:${Utils.getHashString(this@TagViewFinder)}"
+                    "findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)} finder:${Utils.getHashString(this@TagViewFinder)}"
                 )
             }
             return tagView
@@ -71,7 +71,7 @@ internal abstract class TagViewFinder {
             cacheView(tagView, listChild)
             if (_isDebug) {
                 Log.i(
-                    TagViewFinder::class.java.simpleName, """findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)} hash:${Utils.getHashString(this@TagViewFinder)}
+                    TagViewFinder::class.java.simpleName, """findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)} finder:${Utils.getHashString(this@TagViewFinder)}
                     | level:${listChild.size}
                     | cacheSize:${_mapViewCache.size}
                 """.trimMargin()
@@ -118,7 +118,7 @@ internal abstract class TagViewFinder {
                 _mapViewCache.remove(v)
                 if (_mapViewCache.isEmpty()) {
                     if (_isDebug) {
-                        Log.i(TagViewFinder::class.java.simpleName, "view cache empty hash:${Utils.getHashString(this@TagViewFinder)}")
+                        Log.i(TagViewFinder::class.java.simpleName, "view cache empty finder:${Utils.getHashString(this@TagViewFinder)}")
                     }
                     onCacheEmpty()
                 }

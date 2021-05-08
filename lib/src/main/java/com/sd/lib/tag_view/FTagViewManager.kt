@@ -31,7 +31,7 @@ object FTagViewManager {
             if (finder.cacheSize > 0) {
                 _mapFinder[clazz] = finder
                 if (isDebug) {
-                    Log.i(FTagViewManager::class.java.simpleName, "save finder class:${clazz.name} instance:${Utils.getHashString(finder)} size:${_mapFinder.size}")
+                    Log.i(FTagViewManager::class.java.simpleName, "save finder class:${clazz.name} finder:${Utils.getHashString(finder)} size:${_mapFinder.size}")
                 }
             }
             return tagView as T
