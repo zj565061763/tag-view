@@ -56,15 +56,15 @@ internal abstract class TagViewFinder {
 
         var viewParent = view.parent
         while (viewParent is View) {
-            val parent = viewParent as View
-            if (!Utils.isAttached(parent)) {
+            val current = viewParent as View
+            if (!Utils.isAttached(current)) {
                 return null
             }
 
-            tagView = checkTagView(parent)
+            tagView = checkTagView(current)
             if (tagView == null) {
-                listChild.add(parent)
-                viewParent = parent.parent;
+                listChild.add(current)
+                viewParent = current.parent;
                 continue
             }
 
