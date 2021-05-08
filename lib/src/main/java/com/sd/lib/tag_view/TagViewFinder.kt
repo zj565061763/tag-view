@@ -5,14 +5,22 @@ import android.view.View
 import java.util.concurrent.ConcurrentHashMap
 
 internal class TagViewFinder {
+    /** 要查找的目标类 */
     private val _targetClass: Class<out ITagView>
-    private val _mapViewCache: MutableMap<View, ITagView> = ConcurrentHashMap()
+
+    /** 缓存View树 */
+    private val _mapViewCache = ConcurrentHashMap<View, ITagView>()
 
     /** 是否调试模式 */
-    var isDebug = false
+    private var _isDebug: Boolean = false
 
-    constructor(targetClass: Class<out ITagView>) {
+    constructor(targetClass: Class<out ITagView>, isDebug: Boolean) {
         _targetClass = targetClass
+        _isDebug = isDebug
+
+        if (isDebug) {
+            Log.i(TagViewFinder::class.java.simpleName, "create finder targetClass:${targetClass} hash:${Utils.getHashString(this@TagViewFinder)}")
+        }
     }
 
     /**
@@ -23,14 +31,20 @@ internal class TagViewFinder {
             return null
         }
 
-        if (isDebug) {
-            Log.i(TagViewFinder::class.java.simpleName, "findTagView view:${Utils.getObjectId(view)} ---------->")
+        if (_isDebug) {
+            Log.i(
+                TagViewFinder::class.java.simpleName,
+                "findTagView view:${Utils.getObjectId(view)} ----------> hash:${Utils.getHashString(this@TagViewFinder)}"
+            )
         }
 
         var tagView = checkTagView(view)
         if (tagView != null) {
-            if (isDebug) {
-                Log.i(TagViewFinder::class.java.simpleName, "findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)}")
+            if (_isDebug) {
+                Log.i(
+                    TagViewFinder::class.java.simpleName,
+                    "findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)} hash:${Utils.getHashString(this@TagViewFinder)}"
+                )
             }
             return tagView
         }
@@ -52,9 +66,9 @@ internal class TagViewFinder {
             }
 
             cacheView(tagView, listChild)
-            if (isDebug) {
+            if (_isDebug) {
                 Log.i(
-                    TagViewFinder::class.java.simpleName, """findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)}
+                    TagViewFinder::class.java.simpleName, """findTagView view:${Utils.getObjectId(view)} tagView:${Utils.getObjectId(tagView)} hash:${Utils.getHashString(this@TagViewFinder)}
                     | level:${listChild.size}
                     | cacheSize:${_mapViewCache.size}
                 """.trimMargin()
@@ -86,13 +100,13 @@ internal class TagViewFinder {
 
                 val put = _mapViewCache.put(view, tagView)
                 if (put == null) {
-                    view.addOnAttachStateChangeListener(mOnAttachStateChangeListener)
+                    view.addOnAttachStateChangeListener(_onAttachStateChangeListener)
                 }
             }
         }
     }
 
-    private val mOnAttachStateChangeListener: View.OnAttachStateChangeListener = object : View.OnAttachStateChangeListener {
+    private val _onAttachStateChangeListener: View.OnAttachStateChangeListener = object : View.OnAttachStateChangeListener {
         override fun onViewAttachedToWindow(v: View) {}
 
         override fun onViewDetachedFromWindow(v: View) {
@@ -100,9 +114,9 @@ internal class TagViewFinder {
             synchronized(this@TagViewFinder) {
                 _mapViewCache.remove(v)
 
-                if (isDebug) {
+                if (_isDebug) {
                     if (_mapViewCache.isEmpty()) {
-                        Log.i(TagViewFinder::class.java.simpleName, "view cache empty")
+                        Log.i(TagViewFinder::class.java.simpleName, "view cache empty hash:${Utils.getHashString(this@TagViewFinder)}")
                     }
                 }
             }

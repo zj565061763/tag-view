@@ -20,9 +20,7 @@ object FTagViewManager {
         }
 
         synchronized(_mapFinder) {
-            val finder = TagViewFinder(clazz).apply {
-                this.isDebug = this@FTagViewManager.isDebug
-            }
+            val finder = TagViewFinder(clazz, isDebug)
             _mapFinder[clazz] = finder
 
             val tagView = finder.findTagView(view) ?: return null
