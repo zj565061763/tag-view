@@ -1,5 +1,6 @@
 package com.sd.lib.tag_view
 
+import android.util.Log
 import android.view.View
 import java.util.concurrent.ConcurrentHashMap
 
@@ -27,6 +28,10 @@ object FTagViewManager {
             }
             _mapFinder[clazz] = finder
 
+            if (isDebug) {
+                Log.i(FTagViewManager::class.java.simpleName, "save finder class:${clazz.name} instance:${Utils.getHashString(finder)} size:${_mapFinder.size}")
+            }
+
             val tagView = finder.findTagView(view) ?: return null
             return tagView as T
         }
@@ -38,6 +43,10 @@ object FTagViewManager {
     private fun removeFinder(clazz: Class<out ITagView>) {
         synchronized(_mapFinder) {
             _mapFinder.remove(clazz)
+
+            if (isDebug) {
+                Log.i(FTagViewManager::class.java.simpleName, "remove finder class:${clazz.name} size:${_mapFinder.size}")
+            }
         }
     }
 }
