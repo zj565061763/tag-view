@@ -6,10 +6,10 @@ def libVersionCode = 20210329
 def libVersionName = "1.0.0-beta8"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode libVersionCode
         versionName libVersionName
     }
@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.core:core-ktx:1.3.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 

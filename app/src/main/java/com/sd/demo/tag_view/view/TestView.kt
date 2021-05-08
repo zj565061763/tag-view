@@ -5,21 +5,14 @@ import android.util.AttributeSet
 import android.util.Log
 import android.widget.FrameLayout
 import com.sd.demo.tag_view.item.TestItem
-import com.sd.demo.tag_view.view.TestView
 import com.sd.lib.tag_view.FTagViewApi
 
 class TestView : FrameLayout {
-    private val mTagViewApi = FTagViewApi(this@TestView)
+    private val _tagViewApi = FTagViewApi(this@TestView)
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
-
-    init {
-        mTagViewApi.prepare {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        _tagViewApi.prepare {
             Log.i(TestView::class.java.simpleName, "FTagViewApi getViewTag:${it.viewTag} getItem:${it.getItem(TestItem::class.java)}")
         }
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
     }
 }

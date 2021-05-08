@@ -3,32 +3,31 @@ package com.sd.lib.tag_view
 import android.view.View
 
 class FTagViewApi(view: View) {
-    private val mView: View = view
+    private val _view: View = view
 
-    fun findTagView(): ITagView? {
-        return FTagViewManager.findTagView(mView)
+    /**
+     * 查找[FTagView]
+     */
+    fun findTagView(): FTagView? {
+        return FTagViewManager.findTagView(FTagView::class.java, _view)
     }
 
     /**
      * 准备调用当前对象的api
-     *
-     * @param callback
      */
     fun prepare(callback: PrepareCallback) {
         val tagView = findTagView()
         if (tagView != null) {
             callback.onPrepared(tagView)
         } else {
-            mView.post {
+            _view.post {
                 callback.onPrepared(findTagView()!!)
             }
         }
     }
 
     /**
-     * [ITagView.viewTag]
-     *
-     * @return
+     * [FTagView.viewTag]
      */
     val viewTag: String?
         get() {
@@ -37,31 +36,31 @@ class FTagViewApi(view: View) {
         }
 
     /**
-     * [ITagView.findItem]
+     * [FTagView.findItem]
      */
-    fun <T : ITagView.Item> findItem(clazz: Class<T>): T? {
+    fun <T : FTagView.Item> findItem(clazz: Class<T>): T? {
         val tagView = findTagView() ?: return null
         return tagView.findItem(clazz)
     }
 
     /**
-     *  [ITagView.getItem]
+     *  [FTagView.getItem]
      */
-    fun <T : ITagView.Item> getItem(clazz: Class<T>): T? {
+    fun <T : FTagView.Item> getItem(clazz: Class<T>): T? {
         val tagView = findTagView() ?: return null
         return tagView.getItem(clazz)
     }
 
     /**
-     * [ITagView.removeItem]
+     * [FTagView.removeItem]
      */
-    fun <T : ITagView.Item> removeItem(clazz: Class<T>): T? {
+    fun <T : FTagView.Item> removeItem(clazz: Class<T>): T? {
         val tagView = findTagView() ?: return null
         return tagView.removeItem(clazz)
     }
 
     /**
-     * [ITagView.destroyItem]
+     * [FTagView.destroyItem]
      */
     fun destroyItem() {
         val tagView = findTagView() ?: return;
@@ -69,6 +68,6 @@ class FTagViewApi(view: View) {
     }
 
     fun interface PrepareCallback {
-        fun onPrepared(tagViewApi: ITagView)
+        fun onPrepared(tagView: FTagView)
     }
 }

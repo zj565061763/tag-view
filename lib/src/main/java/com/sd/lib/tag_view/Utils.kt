@@ -4,12 +4,9 @@ import android.os.Build
 import android.view.View
 
 internal object Utils {
-
     @JvmStatic
     fun isAttached(view: View?): Boolean {
-        if (view == null) {
-            return false
-        }
+        if (view == null) return false
 
         return if (Build.VERSION.SDK_INT >= 19)
             view.isAttachedToWindow
