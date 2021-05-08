@@ -26,13 +26,14 @@ object FTagViewManager {
                     removeFinder(clazz)
                 }
             }
-            _mapFinder[clazz] = finder
-
-            if (isDebug) {
-                Log.i(FTagViewManager::class.java.simpleName, "save finder class:${clazz.name} instance:${Utils.getHashString(finder)} size:${_mapFinder.size}")
-            }
 
             val tagView = finder.findTagView(view) ?: return null
+            if (finder.cacheSize > 0) {
+                _mapFinder[clazz] = finder
+                if (isDebug) {
+                    Log.i(FTagViewManager::class.java.simpleName, "save finder class:${clazz.name} instance:${Utils.getHashString(finder)} size:${_mapFinder.size}")
+                }
+            }
             return tagView as T
         }
     }

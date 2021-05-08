@@ -14,6 +14,9 @@ internal abstract class TagViewFinder {
     /** 是否调试模式 */
     private var _isDebug: Boolean = false
 
+    /** 缓存大小 */
+    val cacheSize: Int get() = _mapViewCache.size
+
     constructor(targetClass: Class<out ITagView>, isDebug: Boolean) {
         _targetClass = targetClass
         _isDebug = isDebug
