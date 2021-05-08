@@ -4,7 +4,7 @@ import android.util.Log
 import android.view.View
 import java.util.concurrent.ConcurrentHashMap
 
-internal class TagViewFinder {
+internal abstract class TagViewFinder {
     /** 要查找的目标类 */
     private val _targetClass: Class<out ITagView>
 
@@ -113,13 +113,15 @@ internal class TagViewFinder {
             v.removeOnAttachStateChangeListener(this)
             synchronized(this@TagViewFinder) {
                 _mapViewCache.remove(v)
-
-                if (_isDebug) {
-                    if (_mapViewCache.isEmpty()) {
+                if (_mapViewCache.isEmpty()) {
+                    if (_isDebug) {
                         Log.i(TagViewFinder::class.java.simpleName, "view cache empty hash:${Utils.getHashString(this@TagViewFinder)}")
                     }
+                    onCacheEmpty()
                 }
             }
         }
     }
+
+    protected abstract fun onCacheEmpty()
 }

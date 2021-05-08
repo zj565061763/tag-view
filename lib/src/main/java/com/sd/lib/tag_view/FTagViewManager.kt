@@ -20,11 +20,24 @@ object FTagViewManager {
         }
 
         synchronized(_mapFinder) {
-            val finder = TagViewFinder(clazz, isDebug)
+            val finder = object : TagViewFinder(clazz, isDebug) {
+                override fun onCacheEmpty() {
+                    removeFinder(clazz)
+                }
+            }
             _mapFinder[clazz] = finder
 
             val tagView = finder.findTagView(view) ?: return null
             return tagView as T
+        }
+    }
+
+    /**
+     * 移除[TagViewFinder]
+     */
+    private fun removeFinder(clazz: Class<out ITagView>) {
+        synchronized(_mapFinder) {
+            _mapFinder.remove(clazz)
         }
     }
 }
