@@ -4,18 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <com.sd.demo.tag_view.view.CustomTagView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.sd.demo.tag_view.view.TestView
-            android:id="@+id/view_test_level_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
         <include layout="@layout/include_test_view" />
 
-    </FrameLayout>
+    </com.sd.demo.tag_view.view.CustomTagView>
 
     <Button
         android:id="@+id/btn"
