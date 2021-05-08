@@ -4,8 +4,10 @@ plugins {
     id 'maven-publish'
 }
 
+def libGroupId = "com.sd.lib.android"
+def libArtifactId = "tag-view"
 def libVersionCode = 20210508
-def libVersionName = "1.0.0-beta9"
+def libVersionName = "1.0.0-beta10"
 
 android {
     compileSdkVersion 29
@@ -21,6 +23,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        kotlinOptions.freeCompilerArgs += ['-module-name', "$libGroupId.$libArtifactId"]
     }
 }
 
@@ -40,8 +46,8 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
 
-                groupId = "com.sd.lib.android"
-                artifactId = "tag-view"
+                groupId = libGroupId
+                artifactId = libArtifactId
                 version = libVersionName
 
                 // 上传源码
