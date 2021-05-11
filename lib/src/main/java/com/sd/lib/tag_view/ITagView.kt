@@ -1,5 +1,6 @@
 package com.sd.lib.tag_view
 
+import android.view.View
 import java.util.*
 
 interface ITagView {
@@ -12,5 +13,13 @@ interface ITagView {
         /** 空的View标识  */
         @JvmField
         val EMPTY_VIEW_TAG = UUID.randomUUID().toString()
+
+        /**
+         * 查找[view]所依附的[clazz]
+         */
+        inline fun <reified T : ITagView> find(view: View): T? {
+            val clazz = T::class.java
+            return FTagViewManager.findTagView(clazz, view)
+        }
     }
 }

@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.FrameLayout
 import com.sd.demo.tag_view.item.TestItem
 import com.sd.lib.tag_view.FTagViewApi
-import com.sd.lib.tag_view.FTagViewManager
+import com.sd.lib.tag_view.ITagView
 
 class TestView : FrameLayout {
     private val _tagViewApi = FTagViewApi(this@TestView)
@@ -22,7 +22,7 @@ class TestView : FrameLayout {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        val customTagView = FTagViewManager.findTagView(CustomTagView::class.java, this)!!
+        val customTagView = ITagView.find<CustomTagView>(this)!!
         Log.i(
             TestView::class.java.simpleName,
             "customTagView getViewTag:${customTagView.viewTag}"
