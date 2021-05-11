@@ -25,7 +25,7 @@ class TestView : FrameLayout {
         val customTagView = ITagView.find<CustomTagView>(this)!!
         Log.i(
             TestView::class.java.simpleName,
-            "customTagView getViewTag:${customTagView.viewTag}"
+            "CustomTagView getViewTag:${customTagView.viewTag}"
         )
     }
 }
