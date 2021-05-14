@@ -13,7 +13,9 @@ class FTagView : FrameLayout, ITagView {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    override val viewTag: String = Utils.getObjectId(this)
+    override val viewTag: String by lazy {
+        Utils.getObjectId(this@FTagView)
+    }
 
     /**
      * 查找指定类型的Item，如果不存在则返回null
