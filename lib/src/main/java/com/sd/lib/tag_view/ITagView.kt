@@ -15,7 +15,7 @@ interface ITagView {
         val EMPTY_VIEW_TAG = UUID.randomUUID().toString()
 
         /**
-         * 查找[view]所依附的[clazz]
+         * 查找[view]所依附的[T]
          */
         inline fun <reified T : ITagView> find(view: View): T? {
             val clazz = T::class.java
@@ -23,7 +23,7 @@ interface ITagView {
         }
 
         /**
-         * 查找[view]所依附的[clazz]的[viewTag]
+         * 查找[view]所依附的[T]的[viewTag]
          */
         inline fun <reified T : ITagView> findTag(view: View): String? {
             val tagView = find<T>(view)
