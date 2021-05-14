@@ -82,14 +82,11 @@ class FTagView : FrameLayout, ITagView {
     }
 
     companion object {
-        @JvmStatic
-        private fun <T : Item> checkItemClass(clazz: Class<T>?) {
-            requireNotNull(clazz) { "clazz is null" }
+        private fun <T : Item> checkItemClass(clazz: Class<T>) {
             require(!clazz.isInterface) { "clazz is interface $clazz" }
             require(!Modifier.isAbstract(clazz.modifiers)) { "clazz is abstract $clazz" }
         }
 
-        @JvmStatic
         private fun <T : Item> createItem(clazz: Class<T>): T {
             return try {
                 clazz.newInstance()
