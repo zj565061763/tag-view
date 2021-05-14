@@ -6,8 +6,8 @@ plugins {
 
 def libGroupId = "com.sd.lib.android"
 def libArtifactId = "tag-view"
-def libVersionCode = 20210511
-def libVersionName = "1.0.0-beta12"
+def libVersionCode = 20210515
+def libVersionName = "1.0.0-beta13"
 
 android {
     compileSdkVersion 30
