@@ -9,7 +9,7 @@ internal abstract class TagViewFinder {
     private val _targetClass: Class<out ITagView>
 
     /** 缓存View树 */
-    private val _mapViewCache = ConcurrentHashMap<View, ITagView>()
+    private val _mapViewCache: MutableMap<View, ITagView> = ConcurrentHashMap()
 
     /** 是否调试模式 */
     private var _isDebug: Boolean = false
