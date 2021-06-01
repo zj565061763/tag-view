@@ -85,8 +85,8 @@ class FTagView : FrameLayout, ITagView {
 
     companion object {
         private fun <T : Item> checkItemClass(clazz: Class<T>) {
-            require(!clazz.isInterface) { "clazz is interface $clazz" }
-            require(!Modifier.isAbstract(clazz.modifiers)) { "clazz is abstract $clazz" }
+            if (clazz.isInterface) throw IllegalArgumentException("clazz is an interface $clazz")
+            if (Modifier.isAbstract(clazz.modifiers)) throw IllegalArgumentException("clazz is abstract $clazz")
         }
 
         private fun <T : Item> createItem(clazz: Class<T>): T {
