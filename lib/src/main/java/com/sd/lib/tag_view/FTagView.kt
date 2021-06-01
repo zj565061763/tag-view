@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 class FTagView : FrameLayout, ITagView {
     /** 保存[Item] */
-    private val _itemHolder = ConcurrentHashMap<Class<out Item>, Item>()
+    private val _itemHolder: MutableMap<Class<out Item>, Item> = ConcurrentHashMap()
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
