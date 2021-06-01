@@ -23,9 +23,10 @@ class TestView : FrameLayout {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         val customTagView = ITagView.find<CustomTagView>(this)!!
+        val customViewTag = ITagView.findTag<CustomTagView>(this)
         Log.i(
             TestView::class.java.simpleName,
-            "CustomTagView getViewTag:${customTagView.viewTag}"
+            "CustomTagView getViewTag:${customTagView.viewTag} getViewTag:${customViewTag}"
         )
     }
 }

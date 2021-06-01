@@ -26,7 +26,8 @@ interface ITagView {
          * 查找[view]所依附的[T]的[viewTag]
          */
         inline fun <reified T : ITagView> findTag(view: View): String? {
-            val tagView = find<T>(view)
+            val clazz = T::class.java
+            val tagView = FTagViewManager.findTagView(clazz, view)
             return if (tagView != null) tagView.viewTag else EMPTY_VIEW_TAG
         }
     }
