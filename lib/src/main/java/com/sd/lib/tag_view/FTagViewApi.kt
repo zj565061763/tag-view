@@ -21,7 +21,9 @@ class FTagViewApi(view: View) {
             callback.onPrepared(tagView)
         } else {
             _view.post {
-                callback.onPrepared(findTagView()!!)
+                findTagView()?.let {
+                    callback.onPrepared(it)
+                }
             }
         }
     }
