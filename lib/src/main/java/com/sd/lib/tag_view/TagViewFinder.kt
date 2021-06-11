@@ -76,7 +76,7 @@ internal abstract class TagViewFinder {
             return tagView
         }
 
-        throw RuntimeException(ITagView::class.java.simpleName + " was not found int view tree " + view)
+        throw RuntimeException(ITagView::class.java.simpleName + " was not found in view tree " + view)
     }
 
     private fun checkTagView(view: View): ITagView? {
