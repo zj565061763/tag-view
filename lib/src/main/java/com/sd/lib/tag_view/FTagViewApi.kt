@@ -29,7 +29,7 @@ class FTagViewApi(view: View) {
     /**
      * [FTagView.viewTag]
      */
-    val viewTag: String?
+    val viewTag: String
         get() {
             val tagView = findTagView() ?: return ITagView.EMPTY_VIEW_TAG
             return tagView.viewTag
