@@ -27,8 +27,7 @@ interface ITagView {
          */
         inline fun <reified T : ITagView> findTag(view: View): String? {
             val clazz = T::class.java
-            val tagView = FTagViewManager.findTagView(clazz, view)
-            return if (tagView != null) tagView.viewTag else EMPTY_VIEW_TAG
+            return FTagViewManager.findTag(clazz, view)
         }
     }
 }

@@ -11,6 +11,14 @@ object FTagViewManager {
     var isDebug = false
 
     /**
+     * 查找[view]所依附的[clazz]的[ITagView.viewTag]
+     */
+    fun <T : ITagView> findTag(clazz: Class<T>, view: View): String? {
+        val tagView = findTagView(clazz, view)
+        return if (tagView != null) tagView.viewTag else ITagView.EMPTY_VIEW_TAG
+    }
+
+    /**
      * 查找[view]所依附的[clazz]
      */
     fun <T : ITagView> findTagView(clazz: Class<T>, view: View): T? {
